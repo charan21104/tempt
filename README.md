@@ -1,38 +1,51 @@
+//Insertion
 
-//. Using Lambda & Stream API: Create a List of 15 integers.
-//Print even numbers.
-//Find sum of numbers using reduce().
-//Sort in descending order.
+package program3;
 
+import java.sql.*;
+import java.util.Comparator;
 
-
-
-package program2;
-
-import java.util.*;
-
-public class NumberPlay {
+public class InsertDemo {
     static void main() {
-        List<Integer> numList= Arrays.asList(1,2,3,4,5,6,7,8,8,9,6,4,5,2,3);
 
-        numList.stream().filter(n->n%2==0).forEach(System.out::println);
-        System.out.println();
+        String insert_sql = "insert into student(id,name,address) values(?,?,?)";
+        try(
+                Connection conn= DriverManager.getConnection("jdbc:mariadb://localhost:3307/exambase","root","root");
+                PreparedStatement pst=conn.prepareStatement(insert_sql);
 
-        int sum=numList.stream().reduce((x,y)->x+y).get();
 
-        System.out.println(sum);
+                ) {
+            pst.setInt(1,101);
+            pst.setString(2,"A");
+            pst.setString(3,"Hyderabad");
+            pst.executeUpdate();
 
-        System.out.println();
-        Collections.sort(numList,new NumCompare());
+            pst.setInt(1,102);
+            pst.setString(2,"B");
+            pst.setString(3,"Chennai");
+            pst.executeUpdate();
 
-        numList.stream().forEach(System.out::println);
-    }
-}
+            pst.setInt(1,103);
+            pst.setString(2,"C");
+            pst.setString(3,"BLR");
+            pst.executeUpdate();
 
-class NumCompare implements Comparator<Integer>{
+            pst.setInt(1,104);
+            pst.setString(2,"D");
+            pst.setString(3,"Pune");
+            pst.executeUpdate();
 
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return o2.compareTo(o1);
+            pst.setInt(1,105);
+            pst.setString(2,"E");
+            pst.setString(3,"Hyderabad");
+            pst.executeUpdate();
+
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
     }
 }
